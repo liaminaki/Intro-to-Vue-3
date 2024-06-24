@@ -11,9 +11,12 @@ const app = Vue.createApp({
             this.cart.push(id)
         },
 
-        removeItem() {
-            if (this.cart.length > 0) {
-                this.cart.pop()
+        removeItem(id) {
+
+            const index = this.cart.indexOf(id)
+
+            if (index > -1) {
+                this.cart.splice(index, 1)
             }
         }
     }
