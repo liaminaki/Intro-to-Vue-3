@@ -3,8 +3,14 @@ app.component('product-display', {
     premium: {
       type: Boolean,
       required: true
+    },
+
+    cartLength: {
+      type: Number,
+      default: 0
     }
   },
+
   template: 
   /*html*/
   `<div class="product-display">
@@ -39,6 +45,16 @@ app.component('product-display', {
           v-on:click="addToCart">
           Add to Cart
         </button>
+
+        <button 
+          class="button" 
+          :class="{ disabledButton: !cartLength}" 
+          :disabled="!cartLength" 
+          v-on:click="removeItem">
+          Remove item
+        </button>
+
+
       </div>
     </div>
   </div>`,
@@ -53,13 +69,16 @@ app.component('product-display', {
           { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 },
         ]
     }
-  },
+  }, 
   methods: {
       addToCart() {
-          this.cart += 1
+          this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
       },
       updateVariant(index) {
           this.selectedVariant = index
+      },
+      removeItem() {
+        this.$emit('remove-item')
       }
   },
   computed: {
